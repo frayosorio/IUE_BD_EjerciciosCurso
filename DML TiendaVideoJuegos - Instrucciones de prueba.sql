@@ -4,6 +4,10 @@ SELECT *
 
 SELECT *
 	FROM Pais
+	WHERE Id=392
+
+SELECT *
+	FROM Pais
 	WHERE LEFT(Nombre, 2)='CO'
 
 SELECT *
@@ -33,3 +37,17 @@ DELETE FROM Region
 
 DELETE FROM Pais
 	WHERE Id=1
+
+
+SELECT *
+	FROM Plataforma
+
+SELECT *
+	FROM Desarrollador
+		JOIN Pais ON Desarrollador.IdPais = Pais.Id
+	WHERE Pais.Id = 392
+
+SELECT T.Nombre Titulo, D.Nombre EmpresaDesarrolladora, P.Nombre Pais
+	FROM Titulo T
+		JOIN Desarrollador D ON T.IdDesarrollador = D.Id
+		JOIN Pais P ON D.IdPais = P.Id
