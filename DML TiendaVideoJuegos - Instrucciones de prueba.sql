@@ -42,6 +42,8 @@ DELETE FROM Pais
 SELECT *
 	FROM Plataforma
 
+SELECT * FROM Categoria
+
 SELECT *
 	FROM Desarrollador
 		JOIN Pais ON Desarrollador.IdPais = Pais.Id
@@ -51,3 +53,17 @@ SELECT T.Nombre Titulo, D.Nombre EmpresaDesarrolladora, P.Nombre Pais
 	FROM Titulo T
 		JOIN Desarrollador D ON T.IdDesarrollador = D.Id
 		JOIN Pais P ON D.IdPais = P.Id
+
+SELECT * FROM TipoDocumento
+
+SELECT * 
+	FROM Ciudad C
+		JOIN Region R ON C.IdRegion = R.Id
+		JOIN Pais P ON R.IdPais = P.Id
+
+SELECT C.Nombre Cliente, P.Nombre Pais
+	FROM Cliente C
+		JOIN Ciudad CD ON C.IdCiudad = CD.Id
+		JOIN Region R ON CD.IdRegion = R.Id
+		JOIN Pais P ON R.IdPais = P.Id
+
