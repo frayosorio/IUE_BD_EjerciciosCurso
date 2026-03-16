@@ -67,3 +67,45 @@ SELECT C.Nombre Cliente, P.Nombre Pais
 		JOIN Region R ON CD.IdRegion = R.Id
 		JOIN Pais P ON R.IdPais = P.Id
 
+SELECT *
+	FROM Empleado
+
+SELECT *
+	FROM EstadoVenta
+
+--Listado de Ventas
+SELECT V.NumeroFactura, V.Fecha, C.Nombre NombreCliente, TD.Sigla+' '+C.NumeroIdentificacion IdentificacionCliente,
+	E.Nombre NombreEmpleado, TDE.Sigla+' '+E.NumeroIdentificacion IdetificacionEmpleado,
+	EV.Nombre Estado
+	FROM Venta V
+		JOIN Cliente C ON C.Id = V.IdCliente
+		JOIN TipoDocumento TD ON TD.Id = C.IdTipoDocumento
+		JOIN Empleado E ON E.Id = V.IdEmpleado
+		JOIN TipoDocumento TDE ON TDE.Id = E.IdTipoDocumento
+		JOIN EstadoVenta EV ON EV.Id = V.IdEstado
+	WHERE EV.Nombre='Confirmada'
+
+--Listar cuantas ventas hay por cada estado de venta
+SELECT EV.Nombre Estado, COUNT(*) TotalVentas
+	FROM Venta V
+		JOIN EstadoVenta EV ON EV.Id = V.IdEstado
+	GROUP BY EV.Nombre
+
+--Listar cuantas ventas hay por cada cliente
+SELECT C.Nombre NombreCliente, TD.Sigla+' '+C.NumeroIdentificacion IdentificacionCliente,
+	COUNT(*) TotalVentas
+	FROM Venta V
+		JOIN Cliente C ON C.Id = V.IdCliente
+		JOIN TipoDocumento TD ON TD.Id = C.IdTipoDocumento
+	GROUP BY C.Nombre, TD.Sigla, C.NumeroIdentificacion
+
+--Listar el valor total de lo comprtado por cada cliente
+SELECT C.Nombre NombreCliente, TD.Sigla+' '+C.NumeroIdentificacion IdentificacionCliente,
+	SUM(VD.Cantidad*VD.Precio-VD.Descuento) ValorVenta
+	FROM Venta V
+		JOIN Cliente C ON C.Id = V.IdCliente
+		JOIN TipoDocumento TD ON TD.Id = C.IdTipoDocumento
+		JOIN VentaDetalle VD ON V.Id = VD.IdVenta
+	GROUP BY C.Nombre, TD.Sigla, C.NumeroIdentificacion
+	ORDER BY 3 DESC
+
